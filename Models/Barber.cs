@@ -7,7 +7,7 @@ namespace team_status_undefined_backend.Models;
 
 public class Barber
 {
-    [JsonIgnore]
+   
     public int BarberId { get; set; }
 
     [Required]
@@ -27,7 +27,6 @@ public class Barber
     public string? State { get; set; }
 
     [Required]
-    [StringLength(10)]
     public int PhoneNumber { get; set; }
 
     [Required]
@@ -35,6 +34,7 @@ public class Barber
     public string? LicenseNumber { get; set; }
 
     [Required]
+    
     public string? ProfilePic { get; set; }
 
     [Required]

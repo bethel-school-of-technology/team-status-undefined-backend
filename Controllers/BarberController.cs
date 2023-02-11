@@ -11,12 +11,25 @@ public class BarberController : ControllerBase
     private readonly ILogger<BarberController> _logger;
     private readonly IBarberRepository _barberRepository;
 
-    public BarberController(ILogger<BarberController> logger, IBarberRepository repository)
+
+public BarberController(ILogger<BarberController> logger, IBarberRepository repository)
     {
         _logger = logger;
         _barberRepository = repository;
     }
 
+
+
+    [HttpGet]
+    [Route("{barberId:int}")]
+    public ActionResult<Barber> GetBarberById(int barberId) 
+    {
+    var barber = _barberRepository.GetBarberById(barberId);
+    if (barber == null) {
+        return NotFound();
+    }
+    return Ok(barber);
+    }
 
        [HttpGet]
        public ActionResult<IEnumerable<Barber>> GetBarber() 
@@ -25,16 +38,21 @@ public class BarberController : ControllerBase
         }
 
 
-    // [HttpGet]
-    // [Route("{coffeeId:int}")]
-    // public ActionResult<Coffee> GetCoffeeById(int coffeeId) 
-    // {
-    // var coffee = _coffeeRepository.GetCoffeeById(coffeeId);
-    // if (coffee == null) {
-    //     return NotFound();
-    // }
-    // return Ok(coffee);
-    // }
+
+
+    [HttpPut]
+    [Route("{BarberId:int}")]
+    public ActionResult<Barber> UpdateBarber(Barber barber) 
+    {
+    if (!ModelState.IsValid || barber == null) {
+        return BadRequest();
+    }
+    return Ok(_barberRepository.UpdateBarber(barber));
+    }
+
+
+
+
 
        [HttpPost]
        public ActionResult<Barber> CreateBarber(Barber barber) 
@@ -46,15 +64,7 @@ public class BarberController : ControllerBase
         return Created(nameof(GetBarberById), newBarber);
         }
 
-    // [HttpPut]
-    // [Route("{coffeeId:int}")]
-    // public ActionResult<Coffee> UpdateCoffee(Coffee coffee) 
-    // {
-    // if (!ModelState.IsValid || coffee == null) {
-    //     return BadRequest();
-    // }
-    // return Ok(_coffeeRepository.UpdateCoffee(coffee));
-    // }
+
 
     [HttpDelete]
     [Route("{barberId:int}")]
@@ -64,3 +74,4 @@ public class BarberController : ControllerBase
     return NoContent();
     }
 }
+
