@@ -1,21 +1,22 @@
-// using l10_rest.Models;
-// using l10_rest.Repositories;
-// using Microsoft.AspNetCore.Mvc;
+using team_status_undefined_backend.Models;
+using team_status_undefined_backend.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
-// namespace l10_rest.Controllers;
+namespace team_status_undefined_backend.Controllers;
 
-// [ApiController]
-// [Route("[controller]")]
-// public class CoffeeController : ControllerBase 
-// {
-//     private readonly ILogger<CoffeeController> _logger;
-//     private readonly ICoffeeRepository _coffeeRepository;
+[ApiController]
+[Route("[controller]")]
+public class BarberController : ControllerBase 
+{
+    private readonly ILogger<BarberController> _logger;
+    private readonly IBarberRepository _barberRepository;
 
-//     public CoffeeController(ILogger<CoffeeController> logger, ICoffeeRepository repository)
-//     {
-//         _logger = logger;
-//         _coffeeRepository = repository;
-//     }
+    public BarberController(ILogger<BarberController> logger, IBarberRepository repository)
+    {
+        _logger = logger;
+        _barberRepository = repository;
+    }
+
 
 //     [HttpGet]
 //     public ActionResult<IEnumerable<Coffee>> GetCoffee() 
@@ -23,16 +24,16 @@
 //     return Ok(_coffeeRepository.GetAllCoffee());
 //     }
 
-//     [HttpGet]
-//     [Route("{coffeeId:int}")]
-//     public ActionResult<Coffee> GetCoffeeById(int coffeeId) 
-//     {
-//     var coffee = _coffeeRepository.GetCoffeeById(coffeeId);
-//     if (coffee == null) {
-//         return NotFound();
-//     }
-//     return Ok(coffee);
-//     }
+    [HttpGet]
+    [Route("{barberId:int}")]
+    public ActionResult<Barber> GetBarberById(int barberId) 
+    {
+    var barber = _barberRepository.GetBarberById(barberId);
+    if (barber == null) {
+        return NotFound();
+    }
+    return Ok(barber);
+    }
 
 //     [HttpPost]
 // public ActionResult<Coffee> CreateCoffee(Coffee coffee) 
@@ -44,15 +45,15 @@
 //     return Created(nameof(GetCoffeeById), newCoffee);
 //     }
 
-//     [HttpPut]
-//     [Route("{coffeeId:int}")]
-//     public ActionResult<Coffee> UpdateCoffee(Coffee coffee) 
-//     {
-//     if (!ModelState.IsValid || coffee == null) {
-//         return BadRequest();
-//     }
-//     return Ok(_coffeeRepository.UpdateCoffee(coffee));
-//     }
+    [HttpPut]
+    [Route("{BarberId:int}")]
+    public ActionResult<Barber> UpdateBarber(Barber barber) 
+    {
+    if (!ModelState.IsValid || barber == null) {
+        return BadRequest();
+    }
+    return Ok(_barberRepository.UpdateBarber(barber));
+    }
 
 //     [HttpDelete]
 //     [Route("{coffeeId:int}")]
@@ -61,4 +62,4 @@
 //     _coffeeRepository.DeleteCoffeeById(coffeeId); 
 //     return NoContent();
 //     }
-// }
+ }
