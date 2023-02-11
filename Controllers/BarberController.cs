@@ -17,11 +17,11 @@
 //         _coffeeRepository = repository;
 //     }
 
-//     [HttpGet]
-//     public ActionResult<IEnumerable<Coffee>> GetCoffee() 
-//     {
-//     return Ok(_coffeeRepository.GetAllCoffee());
-//     }
+       [HttpGet]
+       public ActionResult<IEnumerable<Barber>> GetBarber() 
+        {
+        return Ok(_barberRepository.GetAllBarbers());
+        }
 
 //     [HttpGet]
 //     [Route("{coffeeId:int}")]
@@ -34,15 +34,15 @@
 //     return Ok(coffee);
 //     }
 
-//     [HttpPost]
-// public ActionResult<Coffee> CreateCoffee(Coffee coffee) 
-//     {
-//     if (!ModelState.IsValid || coffee == null) {
-//         return BadRequest();
-//     }
-//     var newCoffee = _coffeeRepository.CreateCoffee(coffee);
-//     return Created(nameof(GetCoffeeById), newCoffee);
-//     }
+       [HttpPost]
+       public ActionResult<Barber> CreateBarber(Barber barber) 
+        {
+         if (!ModelState.IsValid || barber == null) {
+            return BadRequest();
+        }
+        var newBarber = _barberRepository.CreateBarber(barber);
+        return Created(nameof(GetBarberById), newBarber);
+        }
 
 //     [HttpPut]
 //     [Route("{coffeeId:int}")]
