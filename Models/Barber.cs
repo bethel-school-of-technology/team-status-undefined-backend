@@ -27,7 +27,7 @@ public class Barber
     public string? State { get; set; }
 
     [Required]
-    public int PhoneNumber { get; set; }
+    public string PhoneNumber { get; set; }
 
     [Required]
     [StringLength(7)]

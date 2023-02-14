@@ -40,7 +40,7 @@ public class BarberDbContext : DbContext
             Address = "123 A Road",
             City = "Dayton",
             State = "Ohio",
-            PhoneNumber = 0123456789,
+            PhoneNumber = "0123456789",
             LicenseNumber = "C123456",
             ProfilePic = "https://images.unsplash.com/photo-1517832606299-7ae9b720a186?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=772&q=80",
             Description = "Hi everyone! I've got openings, who needs a trim?",
