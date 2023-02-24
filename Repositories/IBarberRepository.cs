@@ -9,4 +9,6 @@ public interface IBarberRepository
     Barber CreateBarber(Barber newBarber);
     Barber? UpdateBarber(Barber newBarber);
     void DeleteBarberById(int barberId);
+    Barber CreateUser(Barber user);
+    string SignIn(string email, string password);
 }

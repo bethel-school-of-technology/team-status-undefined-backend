@@ -35,6 +35,7 @@ public class Barber
 
     [Required]
     public string? Description { get; set; }  
+    //  WE WILL NEED TO EVENTUALLY MAKE THE SIGNINID A KEY VALUE SO IT AUTO INCREMENTS WHEN YOU CREATE A NEW PROFILE
 
     public int SignInId { get; set; } 
     [Required]

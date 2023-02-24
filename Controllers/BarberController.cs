@@ -60,8 +60,8 @@ public BarberController(ILogger<BarberController> logger, IBarberRepository repo
         if (!ModelState.IsValid || barber == null) {
         return BadRequest();
     }
-    var newBarber = _barberRepository.CreateBarber(barber);
-    return Created(nameof(GetBarberById), newBarber);
+        var newBarber = _barberRepository.CreateBarber(barber);
+        return Created(nameof(GetBarberById), newBarber);
     }
 
 
@@ -70,7 +70,38 @@ public BarberController(ILogger<BarberController> logger, IBarberRepository repo
     [Route("{barberId:int}")]
     public ActionResult DeleteBarber(int barberId) 
     {
-    _barberRepository.DeleteBarberById(barberId); 
-    return NoContent();
+        _barberRepository.DeleteBarberById(barberId); 
+        return NoContent();
+    }
+
+
+    [HttpPost]
+    [Route("register")]
+    public ActionResult CreateUser(Barber user) 
+    {
+    if (user == null || !ModelState.IsValid) {
+        return BadRequest();
+    }
+    _barberRepository.CreateUser(user);
+        return NoContent();
+    }
+
+
+    [HttpGet]
+    [Route("login")]
+    public ActionResult<string> SignIn(string email, string password) 
+    {
+    if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+    {
+        return BadRequest();
+    }
+
+    var token = _barberRepository.SignIn(email, password);
+
+    if (string.IsNullOrWhiteSpace(token)) {
+        return Unauthorized();
+    }
+
+        return Ok(token);
     }
 }
