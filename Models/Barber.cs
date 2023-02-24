@@ -3,8 +3,7 @@ using System.ComponentModel.DataAnnotations;
 namespace team_status_undefined_backend.Models;
 
 public class Barber
-{
-   
+    {   
     public int BarberId { get; set; }
 
     [Required]
@@ -35,5 +34,12 @@ public class Barber
     public string? ProfilePic { get; set; }
 
     [Required]
-    public string? Description { get; set; }    
-}
+    public string? Description { get; set; }  
+
+    public int SignInId { get; set; } 
+    [Required]
+    [EmailAddress]
+    public string? Email { get; set; }
+    [Required]
+    public string? Password { get; set; } 
+    }

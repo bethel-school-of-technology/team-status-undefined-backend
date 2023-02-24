@@ -51,6 +51,10 @@ public class BarberRepository : IBarberRepository
             originalBarber.LicenseNumber = newBarber.LicenseNumber;
             originalBarber.ProfilePic = newBarber.ProfilePic;
             originalBarber.Description = newBarber.Description;
+            // originalBarber.SignInId = newBarber.SignInId;
+            originalBarber.Email = newBarber.Email;
+            originalBarber.Password = newBarber.Password;
+
             _context.SaveChanges();
         }
         return originalBarber;
