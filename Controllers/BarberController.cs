@@ -1,6 +1,8 @@
 using team_status_undefined_backend.Models;
 using team_status_undefined_backend.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 
 namespace team_status_undefined_backend.Controllers;
 
@@ -41,6 +43,7 @@ public BarberController(ILogger<BarberController> logger, IBarberRepository repo
 
 
     [HttpPut]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("{BarberId:int}")]
     public ActionResult<Barber> UpdateBarber(Barber barber) 
     {
@@ -67,6 +70,7 @@ public BarberController(ILogger<BarberController> logger, IBarberRepository repo
 
 
     [HttpDelete]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("{barberId:int}")]
     public ActionResult DeleteBarber(int barberId) 
     {
