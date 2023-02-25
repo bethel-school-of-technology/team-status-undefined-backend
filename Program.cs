@@ -6,12 +6,14 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+var secretKey = builder.Configuration["TokenSecret"];
 
 builder.Services.AddControllers();
-
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSqlite<BarberDbContext>("Data Source=team_status_undefined_backend.db");
+builder.Services.AddScoped<IBarberRepository, BarberRepository>();
 builder.Services.AddSwaggerGen(c => {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "team_status_undefinedAPI", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "l11_tokens", Version = "v1" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
         In = ParameterLocation.Header, 
         Description = "Please insert JWT with Bearer into field",
@@ -31,18 +33,8 @@ builder.Services.AddSwaggerGen(c => {
         new string[] { } 
         } 
     });
-});
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddSqlite<BarberDbContext>("Data Source=team_status_undefined_backend.db");
-builder.Services.AddScoped<IBarberRepository, BarberRepository>();
-builder.Services.AddScoped<IAuthService, AuthService>();
-
-var secretKey = builder.Configuration["TokenSecret"];
-
-builder.Services.AddAuthentication(options => {
+});builder.Services.AddAuthentication(options =>
+{
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 })
@@ -60,21 +52,16 @@ builder.Services.AddAuthentication(options => {
         ClockSkew = TimeSpan.Zero,
         ValidateIssuerSigningKey = true
     };
-});
+}
+);
 
 var app = builder.Build();
-
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.UseCors(builder => builder
-    .WithOrigins("http://localhost:4200", "http://localhost:3000")
-    .AllowAnyHeader()
-    .AllowAnyMethod());
 
 app.UseHttpsRedirection();
 

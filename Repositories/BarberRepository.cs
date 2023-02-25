@@ -1,15 +1,22 @@
 using team_status_undefined_backend.Migrations;
 using team_status_undefined_backend.Models;
+using bcrypt = BCrypt.Net.BCrypt;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
 
 namespace team_status_undefined_backend.Repositories;
 
 public class BarberRepository : IBarberRepository 
 {
     private readonly BarberDbContext _context;
-
-    public BarberRepository(BarberDbContext context)
+    private readonly IConfiguration _config;
+        // STATIC???
+    public BarberRepository(BarberDbContext context, IConfiguration config)
     {
         _context = context;
+        _config = config;
     }
 
     public Barber CreateBarber(Barber newBarber)
@@ -51,8 +58,63 @@ public class BarberRepository : IBarberRepository
             originalBarber.LicenseNumber = newBarber.LicenseNumber;
             originalBarber.ProfilePic = newBarber.ProfilePic;
             originalBarber.Description = newBarber.Description;
+            // originalBarber.SignInId = newBarber.SignInId;
+            //  WE WILL NEED TO EVENTUALLY MAKE THE SIGNINID A KEY VALUE SO IT AUTO INCREMENTS WHEN YOU CREATE A NEW PROFILE
+            originalBarber.Email = newBarber.Email;
+            originalBarber.Password = newBarber.Password;
+
             _context.SaveChanges();
         }
         return originalBarber;
+    }
+
+    public Barber CreateUser(Barber user)
+    {
+        var passwordHash = bcrypt.HashPassword(user.Password);
+        user.Password = passwordHash;
+            _context.Add(user);
+            _context.SaveChanges();
+                return user;    
+    }
+
+    public string SignIn(string email, string password)
+    {
+        var user = _context.Barber.SingleOrDefault(x => x.Email == email);
+        var verified = false;
+
+        if (user != null) {
+            verified = bcrypt.Verify(password, user.Password);
+        }
+
+        if (user == null || !verified)
+        {
+            return String.Empty;
+        }
+        
+        return BuildToken(user);   
+    }
+
+    private string BuildToken(Barber user) {
+    var secret = _config.GetValue<String>("TokenSecret");
+    var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
+    
+    var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+
+    var claims = new Claim[]
+    {
+        new Claim(JwtRegisteredClaimNames.Sub, user.SignInId.ToString()),
+        new Claim(JwtRegisteredClaimNames.Email, user.Email ?? ""),
+    };
+
+    // Create token
+    var jwt = new JwtSecurityToken(
+        claims: claims,
+        expires: DateTime.Now.AddMinutes(5),
+        signingCredentials: signingCredentials);
+    
+    // Encode token
+    var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+    return encodedJwt;
     }
 }

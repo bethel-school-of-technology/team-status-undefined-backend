@@ -7,7 +7,6 @@ public class BarberDbContext : DbContext
 {
     public DbSet<Barber> Barber { get; set; }
 
-    public DbSet<SignIn> SignIns { get; set; }
     public BarberDbContext(DbContextOptions<BarberDbContext> options)
         : base(options)
     {
@@ -30,6 +29,11 @@ public class BarberDbContext : DbContext
             entity.Property(e => e.LicenseNumber).IsRequired();
             entity.Property(e => e.ProfilePic).IsRequired();
             entity.Property(e => e.Description).IsRequired();
+            entity.Property(e => e.SignInId).IsRequired();
+            entity.Property(e => e.Email).IsRequired();
+            entity.HasIndex(x => x.Email).IsUnique();
+            entity.Property(e => e.Password).IsRequired();
+
         });
 
         modelBuilder.Entity<Barber>().HasData
@@ -40,20 +44,16 @@ public class BarberDbContext : DbContext
             FirstName = "Austin",
             LastName = "Fogle",
             Address = "123 A Road",
-            City = "Dayton",
+            City = "Mount Vernon",
             State = "Ohio",
             PhoneNumber = "0123456789",
             LicenseNumber = "C123456",
             ProfilePic = "https://images.unsplash.com/photo-1517832606299-7ae9b720a186?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=772&q=80",
-            Description = "Hi everyone! I've got openings, who needs a trim?",
+            Description = "Try Not To Move Too Much...",
+            SignInId = 1,
+            Email = "Austin@Fogle.com",
+            Password = "austinTheProgrammer"
          }
         );
-
-        modelBuilder.Entity<SignIn>(entity =>
-        {
-            entity.HasKey(e => e.SignInId);
-            entity.Property(e => e.Email).IsRequired();
-            entity.Property(e => e.Password).IsRequired();
-        });
     }
 }

@@ -33,18 +33,18 @@ public BarberController(ILogger<BarberController> logger, IBarberRepository repo
     return Ok(barber);
     }
 
-       [HttpGet]
-       public ActionResult<IEnumerable<Barber>> GetBarber() 
-        {
-        return Ok(_barberRepository.GetAllBarbers());
-        }
+    [HttpGet]
+    public ActionResult<IEnumerable<Barber>> GetBarber() 
+    {
+    return Ok(_barberRepository.GetAllBarbers());
+    }
 
 
 
 
     [HttpPut]
-    [Route("{BarberId:int}")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Route("{BarberId:int}")]
     public ActionResult<Barber> UpdateBarber(Barber barber) 
     {
     if (!ModelState.IsValid || barber == null) {
@@ -57,25 +57,55 @@ public BarberController(ILogger<BarberController> logger, IBarberRepository repo
 
 
 
-       [HttpPost]
-       [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-       public ActionResult<Barber> CreateBarber(Barber barber) 
-        {
-         if (!ModelState.IsValid || barber == null) {
-            return BadRequest();
-        }
+    [HttpPost]
+    public ActionResult<Barber> CreateBarber(Barber barber) 
+    {
+        if (!ModelState.IsValid || barber == null) {
+        return BadRequest();
+    }
         var newBarber = _barberRepository.CreateBarber(barber);
         return Created(nameof(GetBarberById), newBarber);
-        }
+    }
 
 
 
     [HttpDelete]
-    [Route("{barberId:int}")]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    [Route("{barberId:int}")]
     public ActionResult DeleteBarber(int barberId) 
     {
-    _barberRepository.DeleteBarberById(barberId); 
-    return NoContent();
+        _barberRepository.DeleteBarberById(barberId); 
+        return NoContent();
+    }
+
+
+    [HttpPost]
+    [Route("register")]
+    public ActionResult CreateUser(Barber user) 
+    {
+    if (user == null || !ModelState.IsValid) {
+        return BadRequest();
+    }
+    _barberRepository.CreateUser(user);
+        return NoContent();
+    }
+
+
+    [HttpGet]
+    [Route("login")]
+    public ActionResult<string> SignIn(string email, string password) 
+    {
+    if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+    {
+        return BadRequest();
+    }
+
+    var token = _barberRepository.SignIn(email, password);
+
+    if (string.IsNullOrWhiteSpace(token)) {
+        return Unauthorized();
+    }
+
+        return Ok(token);
     }
 }

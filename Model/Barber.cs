@@ -1,13 +1,9 @@
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace team_status_undefined_backend.Models;
 
-
-
 public class Barber
-{
-   
+    {   
     public int BarberId { get; set; }
 
     [Required]
@@ -27,7 +23,7 @@ public class Barber
     public string? State { get; set; }
 
     [Required]
-    public string PhoneNumber { get; set; }
+    public string? PhoneNumber { get; set; }
 
     [Required]
     [StringLength(7)]
@@ -38,8 +34,13 @@ public class Barber
     public string? ProfilePic { get; set; }
 
     [Required]
-    public string? Description { get; set; }
+    public string? Description { get; set; }  
+    //  WE WILL NEED TO EVENTUALLY MAKE THE SIGNINID A KEY VALUE SO IT AUTO INCREMENTS WHEN YOU CREATE A NEW PROFILE
 
-    public SignIn?  Auth { get; set; } 
-    
-}
+    public int SignInId { get; set; } 
+    [Required]
+    [EmailAddress]
+    public string? Email { get; set; }
+    [Required]
+    public string? Password { get; set; } 
+    }
