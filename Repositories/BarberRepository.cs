@@ -91,8 +91,7 @@ public class BarberRepository : IBarberRepository
             return String.Empty;
         }
         
-        // Create & return JWT
-        return "TODO: create JWT";
+        return BuildToken(user);   
     }
 
     private string BuildToken(Barber user) {
