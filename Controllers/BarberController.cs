@@ -14,7 +14,7 @@ public class BarberController : ControllerBase
     private readonly IBarberRepository _barberRepository;
 
 
-public BarberController(ILogger<BarberController> logger, IBarberRepository repository)
+    public BarberController(ILogger<BarberController> logger, IBarberRepository repository)
     {
         _logger = logger;
         _barberRepository = repository;
@@ -28,18 +28,27 @@ public BarberController(ILogger<BarberController> logger, IBarberRepository repo
     {
     var barber = _barberRepository.GetBarberById(barberId);
     if (barber == null) {
+        return NotFound(); 
+    }
+    return Ok(barber);
+    }
+
+    [HttpGet]
+    [Route(search/"{query:string}")]
+    public ActionResult<Barber> SearchBarbers(string search) 
+    {
+    var barber = _barberRepository.SearchBarbers(search);
+    if (barber == null) {
         return NotFound();
     }
     return Ok(barber);
     }
 
-       [HttpGet]
-       public ActionResult<IEnumerable<Barber>> GetBarber() 
-        {
+    [HttpGet]
+    public ActionResult<IEnumerable<Barber>> GetBarber() 
+    {
         return Ok(_barberRepository.GetAllBarbers());
-        }
-
-
+    }
 
 
     [HttpPut]

@@ -33,10 +33,30 @@ public class BarberRepository : IBarberRepository
         return _context.Barber.ToList();
     }
 
+    public IEnumerable<Barber> SearchBarbers(string search)
+    {
+        if(_context.Barber == null)
+        {
+            return _context.Barber.FirstOrDefault(c => c.FirstName == (barber.ToList()));
+        }
+
+        var barber = from c in _context.Barber select c;
+
+        if (!String.IsNullOrEmpty(search))
+        {
+            barber = barber.Where( c => c.City.Contains(search) ||
+                                      c.FirstName.Contains (search));
+        }
+
+        return (barber.ToList());
+
+        }
+
     public Barber? GetBarberById(int barberId)
     {
         return _context.Barber.SingleOrDefault(c => c.BarberId == barberId);
     }
+
 
     public Barber? UpdateBarber(Barber newBarber)
     {
@@ -55,4 +75,6 @@ public class BarberRepository : IBarberRepository
         }
         return originalBarber;
     }
+
+   
 }
