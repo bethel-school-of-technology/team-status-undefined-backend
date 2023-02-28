@@ -34,14 +34,12 @@ public class BarberController : ControllerBase
     }
 
     [HttpGet]
-    [Route(search/"{query:string}")]
-    public ActionResult<Barber> SearchBarbers(string search) 
+    [Route("search/{query}")]
+    public ActionResult<IEnumerable<Barber>> SearchBarbers(string query) 
     {
-    var barber = _barberRepository.SearchBarbers(search);
-    if (barber == null) {
-        return NotFound();
-    }
-    return Ok(barber);
+   
+    return Ok(_barberRepository.SearchBarbers(query));
+
     }
 
     [HttpGet]
@@ -49,7 +47,6 @@ public class BarberController : ControllerBase
     {
         return Ok(_barberRepository.GetAllBarbers());
     }
-
 
     [HttpPut]
     [Route("{BarberId:int}")]

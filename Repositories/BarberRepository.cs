@@ -35,11 +35,7 @@ public class BarberRepository : IBarberRepository
 
     public IEnumerable<Barber> SearchBarbers(string search)
     {
-        if(_context.Barber == null)
-        {
-            return _context.Barber.FirstOrDefault(c => c.FirstName == (barber.ToList()));
-        }
-
+    
         var barber = from c in _context.Barber select c;
 
         if (!String.IsNullOrEmpty(search))
