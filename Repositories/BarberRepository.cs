@@ -125,7 +125,7 @@ public class BarberRepository : IBarberRepository
     // Create token
     var jwt = new JwtSecurityToken(
         claims: claims,
-        expires: DateTime.Now.AddMinutes(5),
+        expires: DateTime.Now.AddMinutes(60),
         signingCredentials: signingCredentials);
     
     // Encode token
