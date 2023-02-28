@@ -13,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSqlite<BarberDbContext>("Data Source=team_status_undefined_backend.db");
 builder.Services.AddScoped<IBarberRepository, BarberRepository>();
 builder.Services.AddSwaggerGen(c => {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "l11_tokens", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Barber API", Version = "v1" });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme {
         In = ParameterLocation.Header, 
         Description = "Please insert JWT with Bearer into field",
@@ -62,6 +62,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors(builder => builder
+    .WithOrigins("http://localhost:4200", "http://localhost:3000")
+    .AllowAnyHeader()
+    .AllowAnyMethod());
 
 app.UseHttpsRedirection();
 

@@ -35,6 +35,22 @@ public class BarberRepository : IBarberRepository
         }
     }
 
+
+    public IEnumerable<Barber> SearchBarbers(string search)
+    {
+    
+        var barber = from c in _context.Barber select c;
+
+        if (!String.IsNullOrEmpty(search))
+        {
+            barber = barber.Where( c => c.City.Contains(search) ||
+                                      c.FirstName.Contains (search));
+        }
+
+        return (barber.ToList());
+
+    }
+
     public IEnumerable<Barber> GetAllBarbers()
     {
         return _context.Barber.ToList();
@@ -109,7 +125,7 @@ public class BarberRepository : IBarberRepository
     // Create token
     var jwt = new JwtSecurityToken(
         claims: claims,
-        expires: DateTime.Now.AddMinutes(5),
+        expires: DateTime.Now.AddMinutes(60),
         signingCredentials: signingCredentials);
     
     // Encode token
