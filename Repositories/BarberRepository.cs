@@ -35,6 +35,22 @@ public class BarberRepository : IBarberRepository
         }
     }
 
+
+    public IEnumerable<Barber> SearchBarbers(string search)
+    {
+    
+        var barber = from c in _context.Barber select c;
+
+        if (!String.IsNullOrEmpty(search))
+        {
+            barber = barber.Where( c => c.City.Contains(search) ||
+                                      c.FirstName.Contains (search));
+        }
+
+        return (barber.ToList());
+
+    }
+
     public IEnumerable<Barber> GetAllBarbers()
     {
         return _context.Barber.ToList();

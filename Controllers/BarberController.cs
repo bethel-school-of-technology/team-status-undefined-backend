@@ -33,6 +33,15 @@ public BarberController(ILogger<BarberController> logger, IBarberRepository repo
     return Ok(barber);
     }
 
+     [HttpGet]
+    [Route("search/{query}")]
+    public ActionResult<IEnumerable<Barber>> SearchBarbers(string query) 
+    {
+   
+    return Ok(_barberRepository.SearchBarbers(query));
+
+    }
+    
     [HttpGet]
     public ActionResult<IEnumerable<Barber>> GetBarber() 
     {
