@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/team-status-undefined-backend.props" />
+</Project>
