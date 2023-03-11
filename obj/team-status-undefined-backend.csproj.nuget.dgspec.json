@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\A-Fog\\Desktop\\team-status-undefined-backend\\team-status-undefined-backend.csproj": {}
+    "/Users/macbook/Desktop/team-status-undefined-backend/team-status-undefined-backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\A-Fog\\Desktop\\team-status-undefined-backend\\team-status-undefined-backend.csproj": {
+    "/Users/macbook/Desktop/team-status-undefined-backend/team-status-undefined-backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\A-Fog\\Desktop\\team-status-undefined-backend\\team-status-undefined-backend.csproj",
+        "projectUniqueName": "/Users/macbook/Desktop/team-status-undefined-backend/team-status-undefined-backend.csproj",
         "projectName": "team-status-undefined-backend",
-        "projectPath": "C:\\Users\\A-Fog\\Desktop\\team-status-undefined-backend\\team-status-undefined-backend.csproj",
-        "packagesPath": "C:\\Users\\A-Fog\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\A-Fog\\Desktop\\team-status-undefined-backend\\obj\\",
+        "projectPath": "/Users/macbook/Desktop/team-status-undefined-backend/team-status-undefined-backend.csproj",
+        "packagesPath": "/Users/macbook/.nuget/packages/",
+        "outputPath": "/Users/macbook/Desktop/team-status-undefined-backend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\A-Fog\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "/Users/macbook/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -88,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.200\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.200/RuntimeIdentifierGraph.json"
         }
       }
     }
