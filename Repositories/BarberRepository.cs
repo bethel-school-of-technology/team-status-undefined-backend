@@ -8,11 +8,12 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace team_status_undefined_backend.Repositories;
 
-public class BarberRepository : IBarberRepository 
+public class BarberRepository : IBarberRepository
 {
     private readonly BarberDbContext _context;
     private readonly IConfiguration _config;
-        // STATIC???
+
+    // STATIC???
     public BarberRepository(BarberDbContext context, IConfiguration config)
     {
         _context = context;
@@ -29,26 +30,23 @@ public class BarberRepository : IBarberRepository
     public void DeleteBarberById(int barberId)
     {
         var barber = _context.Barber.Find(barberId);
-        if (barber != null) {
-            _context.Barber.Remove(barber); 
-            _context.SaveChanges(); 
+        if (barber != null)
+        {
+            _context.Barber.Remove(barber);
+            _context.SaveChanges();
         }
     }
 
-
     public IEnumerable<Barber> SearchBarbers(string search)
     {
-    
         var barber = from c in _context.Barber select c;
 
         if (!String.IsNullOrEmpty(search))
         {
-            barber = barber.Where( c => c.City.Contains(search) ||
-                                      c.FirstName.Contains (search));
+            barber = barber.Where(c => c.City.Contains(search) || c.FirstName.Contains(search));
         }
 
         return (barber.ToList());
-
     }
 
     public IEnumerable<Barber> GetAllBarbers()
@@ -66,7 +64,8 @@ public class BarberRepository : IBarberRepository
         var passwordHash = bcrypt.HashPassword(newBarber.Password);
         newBarber.Password = passwordHash;
         var originalBarber = _context.Barber.Find(newBarber.BarberId);
-        if (originalBarber != null) {
+        if (originalBarber != null)
+        {
             originalBarber.FirstName = newBarber.FirstName;
             originalBarber.LastName = newBarber.LastName;
             originalBarber.Address = newBarber.Address;
@@ -90,9 +89,9 @@ public class BarberRepository : IBarberRepository
     {
         var passwordHash = bcrypt.HashPassword(user.Password);
         user.Password = passwordHash;
-            _context.Add(user);
-            _context.SaveChanges();
-                return user;    
+        _context.Add(user);
+        _context.SaveChanges();
+        return user;
     }
 
     public string SignIn(string email, string password)
@@ -100,7 +99,8 @@ public class BarberRepository : IBarberRepository
         var user = _context.Barber.SingleOrDefault(x => x.Email == email);
         var verified = false;
 
-        if (user != null) {
+        if (user != null)
+        {
             verified = bcrypt.Verify(password, user.Password);
         }
 
@@ -108,31 +108,33 @@ public class BarberRepository : IBarberRepository
         {
             return String.Empty;
         }
-        
-        return BuildToken(user);   
+
+        return BuildToken(user);
     }
 
-    private string BuildToken(Barber user) {
-    var secret = _config.GetValue<String>("TokenSecret");
-    var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
-    
-    var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
-
-    var claims = new Claim[]
+    private string BuildToken(Barber user)
     {
-        new Claim(JwtRegisteredClaimNames.Sub, user.BarberId.ToString()),
-        new Claim(JwtRegisteredClaimNames.Email, user.Email ?? ""),
-    };
+        var secret = _config.GetValue<String>("TokenSecret");
+        var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
 
-    // Create token
-    var jwt = new JwtSecurityToken(
-        claims: claims,
-        expires: DateTime.Now.AddMinutes(60),
-        signingCredentials: signingCredentials);
-    
-    // Encode token
-    var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+        var signingCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
 
-    return encodedJwt;
+        var claims = new Claim[]
+        {
+            new Claim(JwtRegisteredClaimNames.Sub, user.BarberId.ToString()),
+            new Claim(JwtRegisteredClaimNames.Email, user.Email ?? ""),
+        };
+
+        // Create token
+        var jwt = new JwtSecurityToken(
+            claims: claims,
+            expires: DateTime.Now.AddMinutes(60),
+            signingCredentials: signingCredentials
+        );
+
+        // Encode token
+        var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
+
+        return encodedJwt;
     }
 }

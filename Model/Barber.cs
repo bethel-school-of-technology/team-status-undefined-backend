@@ -1,9 +1,11 @@
+using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace team_status_undefined_backend.Models;
 
 public class Barber
-    {   
+{
     public int BarberId { get; set; }
 
     [Required]
@@ -30,15 +32,18 @@ public class Barber
     public string? LicenseNumber { get; set; }
 
     [Required]
-    
     public string? ProfilePic { get; set; }
 
     [Required]
-    public string? Description { get; set; }  
-   
+    public string? Description { get; set; }
+
     [Required]
     [EmailAddress]
     public string? Email { get; set; }
+
     [Required]
-    public string? Password { get; set; } 
-    }
+    public string? Password { get; set; }
+
+    [JsonIgnore]
+    public virtual List<BarberImageLink> ImageLinks { get; set; } = new List<BarberImageLink>();
+}

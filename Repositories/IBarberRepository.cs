@@ -7,6 +7,7 @@ public interface IBarberRepository
     IEnumerable<Barber> GetAllBarbers();
     IEnumerable<Barber> SearchBarbers(string search);
     Barber? GetBarberById(int barberId);
+
     //Barber CreateBarber(Barber newBarber);
     Barber? UpdateBarber(Barber newBarber);
     void DeleteBarberById(int barberId);

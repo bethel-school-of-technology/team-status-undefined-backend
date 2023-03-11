@@ -6,12 +6,10 @@ namespace team_status_undefined_backend.Migrations;
 public class BarberDbContext : DbContext
 {
     public DbSet<Barber> Barber { get; set; }
+    public DbSet<BarberImageLink> BarberImageLinks { get; set; }
 
     public BarberDbContext(DbContextOptions<BarberDbContext> options)
-        : base(options)
-    {
-    }
-
+        : base(options) { }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -33,8 +31,13 @@ public class BarberDbContext : DbContext
             entity.HasIndex(x => x.Email).IsUnique();
             entity.Property(e => e.Password).IsRequired();
 
+            entity.HasMany<BarberImageLink>(b => b.ImageLinks).WithOne(i => i.Barber);
         });
-
-        
+        modelBuilder.Entity<BarberImageLink>(entity =>
+        {
+            entity.HasKey(e => e.BarberImageLinkId);
+            entity.Property(e => e.BarberId).IsRequired();
+            entity.Property(e => e.ImageUrl).IsRequired();
+        });
     }
 }
