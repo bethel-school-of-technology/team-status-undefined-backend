@@ -24,8 +24,8 @@ public class BarberImgRepository : IBarberImgRepository
 
     public void DeleteBarberImageLinkId(int barberImageLinkId)
     {
-        var BarberImageLink = _context.Barber.Find(barberImageLink);
-        if (barberImageLink != null)
+        var BarberImageLink = _context.Barber.Find(barberImageLinkId);
+        if (barberImageLinkId != null)
         {
             _context.Barber.Remove(BarberImageLink);
             _context.SaveChanges();
@@ -34,7 +34,7 @@ public class BarberImgRepository : IBarberImgRepository
 
     public IEnumerable<BarberImageLink> GetAllBarberImgs()
     {
-        return _context.Barber.ToList();
+        return (IEnumerable<BarberImageLink>)_context.Barber.ToList();
     }
 
 
