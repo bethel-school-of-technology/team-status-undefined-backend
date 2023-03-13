@@ -39,9 +39,9 @@ public class BarberImgRepository : IBarberImgRepository
 
 
     // I DON'T THINK WE NEED THIS ONE BUT COMMENTED OUT JUST IN CASE //
-    // public BarberImageLink? GetBarberImageLinkId(int barberImageLinkId)
-    // {
-    //     return _context.Barber.SingleOrDefault(c => c.BarberImageLinkId == barberImageLinkId);
-    // }
+    public BarberImageLink? GetImageLinkById(int barberImageLinkId)
+    {
+        return _context.BarberImageLinks.SingleOrDefault(c => c.BarberImageLinkId == barberImageLinkId);
+    }
 
 }

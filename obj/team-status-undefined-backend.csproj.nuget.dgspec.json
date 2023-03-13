@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/Users/macbook/Desktop/team-status-undefined-backend/team-status-undefined-backend.csproj": {}
+    "/Users/findingdestiny/Desktop/team-status-undefined-backend/team-status-undefined-backend.csproj": {}
   },
   "projects": {
-    "/Users/macbook/Desktop/team-status-undefined-backend/team-status-undefined-backend.csproj": {
+    "/Users/findingdestiny/Desktop/team-status-undefined-backend/team-status-undefined-backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/macbook/Desktop/team-status-undefined-backend/team-status-undefined-backend.csproj",
+        "projectUniqueName": "/Users/findingdestiny/Desktop/team-status-undefined-backend/team-status-undefined-backend.csproj",
         "projectName": "team-status-undefined-backend",
-        "projectPath": "/Users/macbook/Desktop/team-status-undefined-backend/team-status-undefined-backend.csproj",
-        "packagesPath": "/Users/macbook/.nuget/packages/",
-        "outputPath": "/Users/macbook/Desktop/team-status-undefined-backend/obj/",
+        "projectPath": "/Users/findingdestiny/Desktop/team-status-undefined-backend/team-status-undefined-backend.csproj",
+        "packagesPath": "/Users/findingdestiny/.nuget/packages/",
+        "outputPath": "/Users/findingdestiny/Desktop/team-status-undefined-backend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/macbook/.nuget/NuGet/NuGet.Config"
+          "/Users/findingdestiny/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -88,7 +88,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.200/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.102/RuntimeIdentifierGraph.json"
         }
       }
     }

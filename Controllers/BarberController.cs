@@ -42,7 +42,7 @@ public class BarberController : ControllerBase
     public ActionResult<IEnumerable<Barber>> GetBarber()
     {
         return Ok(_barberRepository.GetAllBarbers());
-    }
+    } 
 
     [HttpPut]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
