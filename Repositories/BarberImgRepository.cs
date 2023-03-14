@@ -24,17 +24,17 @@ public class BarberImgRepository : IBarberImgRepository
 
     public void DeleteBarberImageLinkId(int barberImageLinkId)
     {
-        var BarberImageLink = _context.Barber.Find(barberImageLinkId);
-        if (barberImageLinkId != null)
+        var BarberImageLink = _context.BarberImageLinks.Find(barberImageLinkId);
+        if (barberImageLinkId == BarberImageLink.BarberImageLinkId)
         {
-            _context.Barber.Remove(BarberImageLink);
+            _context.BarberImageLinks.Remove(BarberImageLink);
             _context.SaveChanges();
         }
     }
 
     public IEnumerable<BarberImageLink> GetAllBarberImgs()
     {
-        return (IEnumerable<BarberImageLink>)_context.Barber.ToList();
+        return _context.BarberImageLinks.ToList();
     }
 
 

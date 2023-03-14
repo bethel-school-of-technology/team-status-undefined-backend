@@ -30,7 +30,7 @@ public class BarberRepository : IBarberRepository
     public void DeleteBarberById(int barberId)
     {
         var barber = _context.Barber.Find(barberId);
-        if (barber != null)
+        if (barberId == barber.BarberId)
         {
             _context.Barber.Remove(barber);
             _context.SaveChanges();
@@ -64,7 +64,7 @@ public class BarberRepository : IBarberRepository
         var passwordHash = bcrypt.HashPassword(newBarber.Password);
         newBarber.Password = passwordHash;
         var originalBarber = _context.Barber.Find(newBarber.BarberId);
-        if (originalBarber != null)
+        if (newBarber.BarberId == originalBarber.BarberId)
         {
             originalBarber.FirstName = newBarber.FirstName;
             originalBarber.LastName = newBarber.LastName;
