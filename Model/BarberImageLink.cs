@@ -16,5 +16,5 @@ public class BarberImageLink
     public string? ImageUrl { get; set; }
 
     [JsonIgnore]
-    public virtual Barber Barber { get; set; }
+    public virtual Barber? Barber { get; set; }
 }

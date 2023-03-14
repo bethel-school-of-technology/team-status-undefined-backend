@@ -24,24 +24,24 @@ public class BarberImgRepository : IBarberImgRepository
 
     public void DeleteBarberImageLinkId(int barberImageLinkId)
     {
-        var BarberImageLink = _context.Barber.Find(barberImageLinkId);
-        if (barberImageLinkId != null)
+        var BarberImageLink = _context.BarberImageLinks.Find(barberImageLinkId);
+        if (barberImageLinkId == BarberImageLink.BarberImageLinkId)
         {
-            _context.Barber.Remove(BarberImageLink);
+            _context.BarberImageLinks.Remove(BarberImageLink);
             _context.SaveChanges();
         }
     }
 
     public IEnumerable<BarberImageLink> GetAllBarberImgs()
     {
-        return (IEnumerable<BarberImageLink>)_context.Barber.ToList();
+        return _context.BarberImageLinks.ToList();
     }
 
 
     // I DON'T THINK WE NEED THIS ONE BUT COMMENTED OUT JUST IN CASE //
-    // public BarberImageLink? GetBarberImageLinkId(int barberImageLinkId)
-    // {
-    //     return _context.Barber.SingleOrDefault(c => c.BarberImageLinkId == barberImageLinkId);
-    // }
+    public BarberImageLink? GetImageLinkById(int barberImageLinkId)
+    {
+        return _context.BarberImageLinks.SingleOrDefault(c => c.BarberImageLinkId == barberImageLinkId);
+    }
 
 }
