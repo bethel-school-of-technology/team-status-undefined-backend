@@ -14,6 +14,7 @@ public class BarberImgRepository : IBarberImgRepository
         _config = config;
     }
 
+    // CreateImg METHOD
     public BarberImageLink? CreateImg(BarberImageLink imageLink)
     {
         _context.Add(imageLink);
@@ -21,7 +22,10 @@ public class BarberImgRepository : IBarberImgRepository
         return imageLink;
     }
 
+    // CreateImg METHOD
 
+
+    // DeleteBarberImageLinkId METHOD
     public void DeleteBarberImageLinkId(int barberImageLinkId)
     {
         var BarberImageLink = _context.BarberImageLinks.Find(barberImageLinkId);
@@ -32,16 +36,24 @@ public class BarberImgRepository : IBarberImgRepository
         }
     }
 
+    // DeleteBarberImageLinkId METHOD
+
+
+    // GetAllBarberImgs METHOD
     public IEnumerable<BarberImageLink> GetAllBarberImgs()
     {
         return _context.BarberImageLinks.ToList();
     }
 
+    // GetAllBarberImgs METHOD
 
-    // I DON'T THINK WE NEED THIS ONE BUT COMMENTED OUT JUST IN CASE //
+    
+    // GetImageLinkById METHOD
     public BarberImageLink? GetImageLinkById(int barberImageLinkId)
     {
-        return _context.BarberImageLinks.SingleOrDefault(c => c.BarberImageLinkId == barberImageLinkId);
+        return _context.BarberImageLinks.SingleOrDefault(
+            c => c.BarberImageLinkId == barberImageLinkId
+        );
     }
-
+    // GetImageLinkById METHOD
 }

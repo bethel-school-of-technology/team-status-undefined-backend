@@ -19,6 +19,7 @@ public class BarberController : ControllerBase
         _barberRepository = repository;
     }
 
+    // GET BARBER BY ID METHOD
     [HttpGet]
     [Route("{barberId:int}")]
     public ActionResult<Barber> GetBarberById(int barberId)
@@ -31,6 +32,10 @@ public class BarberController : ControllerBase
         return Ok(barber);
     }
 
+    // GET BARBER BY ID METHOD
+
+
+    // SEARCH METHOD
     [HttpGet]
     [Route("search/{query}")]
     public ActionResult<IEnumerable<Barber>> SearchBarbers(string query)
@@ -38,12 +43,20 @@ public class BarberController : ControllerBase
         return Ok(_barberRepository.SearchBarbers(query));
     }
 
+    // SEARCH METHOD
+
+
+    // GET ALL BARBERS METHOD
     [HttpGet]
     public ActionResult<IEnumerable<Barber>> GetBarber()
     {
         return Ok(_barberRepository.GetAllBarbers());
-    } 
+    }
 
+    // GET ALL BARBERS METHOD
+
+
+    // UPDATE BARBER METHOD
     [HttpPut]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("{BarberId:int}")]
@@ -56,18 +69,10 @@ public class BarberController : ControllerBase
         return Ok(_barberRepository.UpdateBarber(barber));
     }
 
-    // [HttpPost]
-    // public ActionResult<Barber> CreateBarber(Barber barber)
-    // {
-    //     if (!ModelState.IsValid || barber == null) {
-    //     return BadRequest();
-    // }
-    //     var newBarber = _barberRepository.CreateBarber(barber);
-    //     return Created(nameof(GetBarberById), newBarber);
-    // }
+    // UPDATE BARBER METHOD
 
 
-
+    // DELETE BARBER METHOD
     [HttpDelete]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("{barberId:int}")]
@@ -77,6 +82,10 @@ public class BarberController : ControllerBase
         return NoContent();
     }
 
+    // DELETE BARBER METHOD
+
+
+    // CREATE USER METHOD
     [HttpPost]
     [Route("register")]
     public ActionResult CreateUser(Barber user)
@@ -89,7 +98,11 @@ public class BarberController : ControllerBase
         return NoContent();
     }
 
-    [HttpGet]
+    // CREATE USER METHOD
+
+    
+    // SIGN IN METHOD
+    [HttpPost]
     [Route("login")]
     public ActionResult<string> SignIn(string email, string password)
     {
@@ -107,4 +120,5 @@ public class BarberController : ControllerBase
 
         return Ok(token);
     }
+    // SIGN IN METHOD
 }

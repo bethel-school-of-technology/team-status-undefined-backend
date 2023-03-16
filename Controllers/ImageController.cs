@@ -8,8 +8,7 @@ namespace team_status_undefined_backend.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-
-public class ImageController : ControllerBase 
+public class ImageController : ControllerBase
 {
     private readonly ILogger<ImageController> _logger;
     private readonly IBarberImgRepository _barberImgRepository;
@@ -20,12 +19,17 @@ public class ImageController : ControllerBase
         _barberImgRepository = repository;
     }
 
+    // GET ALL IMAGES METHOD
     [HttpGet]
     public ActionResult<BarberImageLink> GetImgs()
     {
         return Ok(_barberImgRepository.GetAllBarberImgs());
     }
 
+    // GET ALL IMAGES METHOD
+
+
+    // DELETE IMAGE METHOD
     [HttpDelete]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("{barberImageLinkId:int}")]
@@ -35,17 +39,26 @@ public class ImageController : ControllerBase
         return NoContent();
     }
 
+    // DELETE IMAGE METHOD
+
+
+    // CREATE IMAGE METHOD
     [HttpPost]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public ActionResult<BarberImageLink> CreateImage(BarberImageLink image)
     {
-        if (!ModelState.IsValid || image == null) {
-        return BadRequest();
-    }
+        if (!ModelState.IsValid || image == null)
+        {
+            return BadRequest();
+        }
         var newImage = _barberImgRepository.CreateImg(image);
         return Created(nameof(GetImageLinkById), newImage);
     }
 
+    // CREATE IMAGE METHOD
+
+    
+    // GET IMAGE BY ID METHOD
     [HttpGet]
     [Route("{barberImageLinkId:int}")]
     public ActionResult<BarberImageLink> GetImageLinkById(int barberImageLinkId)
@@ -57,5 +70,5 @@ public class ImageController : ControllerBase
         }
         return Ok(img);
     }
-
+    // GET IMAGE BY ID METHOD
 }
