@@ -13,20 +13,13 @@ public class BarberRepository : IBarberRepository
     private readonly BarberDbContext _context;
     private readonly IConfiguration _config;
 
-    // STATIC???
     public BarberRepository(BarberDbContext context, IConfiguration config)
     {
         _context = context;
         _config = config;
     }
 
-    // public Barber CreateBarber(Barber newBarber)
-    // {
-    //     _context.Barber.Add(newBarber);
-    //     _context.SaveChanges();
-    //     return newBarber;
-    // }
-
+    // DeleteBarberById METHOD
     public void DeleteBarberById(int barberId)
     {
         var barber = _context.Barber.Find(barberId);
@@ -37,6 +30,10 @@ public class BarberRepository : IBarberRepository
         }
     }
 
+    // DeleteBarberById METHOD
+
+
+    // SearchBarbers METHOD
     public IEnumerable<Barber> SearchBarbers(string search)
     {
         var barber = from c in _context.Barber select c;
@@ -49,16 +46,28 @@ public class BarberRepository : IBarberRepository
         return (barber.ToList());
     }
 
+    // SearchBarbers METHOD
+
+
+    // GetAllBarbers METHOD
     public IEnumerable<Barber> GetAllBarbers()
     {
         return _context.Barber.ToList();
     }
 
+    // GetAllBarbers METHOD
+
+
+    // GetBarberById METHOD
     public Barber? GetBarberById(int barberId)
     {
         return _context.Barber.SingleOrDefault(c => c.BarberId == barberId);
     }
 
+    // GetBarberById METHOD
+
+
+    // UpdateBarber METHOD
     public Barber? UpdateBarber(Barber newBarber)
     {
         var passwordHash = bcrypt.HashPassword(newBarber.Password);
@@ -75,8 +84,6 @@ public class BarberRepository : IBarberRepository
             originalBarber.LicenseNumber = newBarber.LicenseNumber;
             originalBarber.ProfilePic = newBarber.ProfilePic;
             originalBarber.Description = newBarber.Description;
-            // originalBarber.SignInId = newBarber.SignInId;
-            //  WE WILL NEED TO EVENTUALLY MAKE THE SIGNINID A KEY VALUE SO IT AUTO INCREMENTS WHEN YOU CREATE A NEW PROFILE
             originalBarber.Email = newBarber.Email;
             originalBarber.Password = newBarber.Password;
 
@@ -85,6 +92,10 @@ public class BarberRepository : IBarberRepository
         return originalBarber;
     }
 
+    // UpdateBarber METHOD
+
+
+    // CreateUser METHOD
     public Barber? CreateUser(Barber user)
     {
         var passwordHash = bcrypt.HashPassword(user.Password);
@@ -94,6 +105,10 @@ public class BarberRepository : IBarberRepository
         return user;
     }
 
+    // CreateUser METHOD
+
+    
+    // SignIn METHOD
     public string SignIn(string email, string password)
     {
         var user = _context.Barber.SingleOrDefault(x => x.Email == email);
@@ -112,6 +127,8 @@ public class BarberRepository : IBarberRepository
         return BuildToken(user);
     }
 
+    // SignIn METHOD
+
     private string BuildToken(Barber user)
     {
         var secret = _config.GetValue<String>("TokenSecret");
@@ -125,14 +142,12 @@ public class BarberRepository : IBarberRepository
             new Claim(JwtRegisteredClaimNames.Email, user.Email ?? ""),
         };
 
-        // Create token
         var jwt = new JwtSecurityToken(
             claims: claims,
             expires: DateTime.Now.AddMinutes(60),
             signingCredentials: signingCredentials
         );
 
-        // Encode token
         var encodedJwt = new JwtSecurityTokenHandler().WriteToken(jwt);
 
         return encodedJwt;

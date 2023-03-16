@@ -8,8 +8,7 @@ public interface IBarberImgRepository
 
     BarberImageLink? CreateImg(BarberImageLink barberImage);
 
-    void DeleteBarberImageLinkId(int barberImageLinkId);   
+    void DeleteBarberImageLinkId(int barberImageLinkId);
 
     BarberImageLink? GetImageLinkById(int barberImageLinkId);
-
 }
