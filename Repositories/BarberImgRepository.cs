@@ -48,12 +48,12 @@ public class BarberImgRepository : IBarberImgRepository
     // GetAllBarberImgs METHOD
 
     
-    // GetImageLinkById METHOD
-    public BarberImageLink? GetImageLinkById(int barberImageLinkId)
+    // GetImageByBarberId METHOD
+    public IEnumerable<BarberImageLink> GetImageByBarberId(int barberId)
     {
-        return _context.BarberImageLinks.SingleOrDefault(
-            c => c.BarberImageLinkId == barberImageLinkId
+        return _context.BarberImageLinks.Where(
+            c => c.BarberId == barberId
         );
     }
-    // GetImageLinkById METHOD
+    // GetImageByBarberId METHOD
 }

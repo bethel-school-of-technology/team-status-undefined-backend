@@ -35,6 +35,7 @@ public class Barber
     public string? ProfilePic { get; set; }
 
     [Required]
+    [StringLength(250)]
     public string? Description { get; set; }
 
     [Required]

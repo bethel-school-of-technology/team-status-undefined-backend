@@ -36,6 +36,8 @@ public class BarberDbContext : DbContext
         modelBuilder.Entity<BarberImageLink>(entity =>
         {
             entity.HasKey(e => e.BarberImageLinkId);
+            entity.Property(e => e.Title).IsRequired();
+            entity.Property(e => e.Description).IsRequired();
             entity.Property(e => e.BarberId).IsRequired();
             entity.Property(e => e.ImageUrl).IsRequired();
         });
