@@ -100,18 +100,18 @@ public class BarberController : ControllerBase
 
     // CREATE USER METHOD
 
-    
+
     // SIGN IN METHOD
     [HttpPost]
     [Route("login")]
-    public ActionResult<string> SignIn(string email, string password)
+    public ActionResult<string> SignIn(BarberSignIn user)
     {
-        if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(password))
+        if (string.IsNullOrWhiteSpace(user.Email) || string.IsNullOrWhiteSpace(user.Password))
         {
             return BadRequest();
         }
 
-        var token = _barberRepository.SignIn(email, password);
+        var token = _barberRepository.SignIn(user.Email, user.Password);
 
         if (string.IsNullOrWhiteSpace(token))
         {
