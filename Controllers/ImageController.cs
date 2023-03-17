@@ -52,7 +52,7 @@ public class ImageController : ControllerBase
             return BadRequest();
         }
         var newImage = _barberImgRepository.CreateImg(image);
-        return Created(nameof(GetImageLinkById), newImage);
+        return Created(nameof(GetImageByBarberId), newImage);
     }
 
     // CREATE IMAGE METHOD
@@ -60,10 +60,10 @@ public class ImageController : ControllerBase
     
     // GET IMAGE BY ID METHOD
     [HttpGet]
-    [Route("{barberImageLinkId:int}")]
-    public ActionResult<BarberImageLink> GetImageLinkById(int barberImageLinkId)
+    [Route("{barberId:int}")]
+    public ActionResult GetImageByBarberId(int barberId)
     {
-        var img = _barberImgRepository.GetImageLinkById(barberImageLinkId);
+        var img = _barberImgRepository.GetImageByBarberId(barberId);
         if (img == null)
         {
             return NotFound();
