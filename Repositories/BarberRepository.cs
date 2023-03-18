@@ -19,20 +19,8 @@ public class BarberRepository : IBarberRepository
         _config = config;
     }
 
-    // DeleteBarberById METHOD
-    // public void DeleteBarberById(int barberId)
-    // {
-    //     var barber = _context.Barber.Find(barberId);
-    //     if (barberId == barber.BarberId)
-    //     {
-    //         _context.Barber.Remove(barber);
-    //         _context.SaveChanges();
-    //     }
-    // }
-    // DeleteBarberById METHOD
 
-
-// TEST DeleteBarberById METHOD
+    // DeleteBarberById METHOD
     public void DeleteBarberById(int barberId)
     {
         var barber = _context.Barber.Find(barberId);
@@ -42,7 +30,7 @@ public class BarberRepository : IBarberRepository
             _context.SaveChanges();
         }
     }
-// TEST DeleteBarberById METHOD
+    // DeleteBarberById METHOD
 
 
     // SearchBarbers METHOD
