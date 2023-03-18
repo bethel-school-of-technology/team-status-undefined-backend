@@ -83,7 +83,7 @@ public class BarberController : ControllerBase
     // UPDATE BARBER METHOD
 
 
-    // TEST DELETE BARBER METHOD
+    // DELETE BARBER METHOD
     [HttpDelete]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("{barberId:int}")]
@@ -112,6 +112,8 @@ public class BarberController : ControllerBase
         {
             return Unauthorized();
         }
+
+        
     }
     // DELETE BARBER METHOD  
 
