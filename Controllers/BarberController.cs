@@ -31,7 +31,6 @@ public class BarberController : ControllerBase
         }
         return Ok(barber);
     }
-
     // GET BARBER BY ID METHOD
 
 
@@ -42,7 +41,6 @@ public class BarberController : ControllerBase
     {
         return Ok(_barberRepository.SearchBarbers(query));
     }
-
     // SEARCH METHOD
 
 
@@ -52,37 +50,98 @@ public class BarberController : ControllerBase
     {
         return Ok(_barberRepository.GetAllBarbers());
     }
-
     // GET ALL BARBERS METHOD
 
 
     // UPDATE BARBER METHOD
-    [HttpPut]
-    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    [Route("{BarberId:int}")]
-    public ActionResult<Barber> UpdateBarber(Barber barber)
-    {
-        if (!ModelState.IsValid || barber == null)
-        {
-            return BadRequest();
-        }
-        return Ok(_barberRepository.UpdateBarber(barber));
-    }
-
+    // [HttpPut]
+    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    // [Route("{BarberId:int}")]
+    // public ActionResult<Barber> UpdateBarber(Barber barber)
+    // {
+    //     if (!ModelState.IsValid || barber == null)
+    //     {
+    //         return BadRequest();
+    //     }
+    //     return Ok(_barberRepository.UpdateBarber(barber));
+    // }
     // UPDATE BARBER METHOD
 
 
+    // TEST UPDATE METHOD
+    [HttpPut]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    // [Route("{BarberId:int}")] WHICH ROUTE?
+    // [Route("edit/{BarberId:int}")]
+    public ActionResult<Barber> UpdateBarber(Barber updatedBarber)
+    {
+        if (HttpContext.User == null)
+        {
+            return Unauthorized();
+        }
+
+        var userIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier");
+        var userId = Int32.Parse(userIdClaim.Value);
+
+        if (!ModelState.IsValid || updatedBarber == null)
+        {
+            return BadRequest();
+        }
+
+        if (userId == updatedBarber.BarberId)
+        {
+            return Ok(_barberRepository.UpdateBarber(updatedBarber));
+        }
+        else
+        {
+            return Unauthorized();
+        }
+    }
+    // TEST UPDATE METHOD
+
+
     // DELETE BARBER METHOD
+    // [HttpDelete]
+    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+    // [Route("{barberId:int}")]
+    // public ActionResult DeleteBarber(int barberId)
+    // {
+    //     _barberRepository.DeleteBarberById(barberId);
+    //     return NoContent();
+    // }
+    // DELETE BARBER METHOD
+
+    // TEST DELETE METHOD
     [HttpDelete]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("{barberId:int}")]
     public ActionResult DeleteBarber(int barberId)
     {
-        _barberRepository.DeleteBarberById(barberId);
-        return NoContent();
-    }
+        if (HttpContext.User == null)
+        {
+            return Unauthorized();
+        }
 
-    // DELETE BARBER METHOD
+        var userIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"); //QUESTION THIS
+        var userId = Int32.Parse(userIdClaim.Value); //NOT RETURNING THE RIGHT DATA TYPE
+        var barberToDelete = _barberRepository.GetBarberById(barberId);
+
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+
+        if (userId == barberToDelete.BarberId)
+        {
+            _barberRepository.DeleteBarberById(barberId);
+            return NoContent();
+        }
+        else
+        {
+            return Unauthorized();
+        }
+    }
+    // TEST DELETE METHOD  _experiencesRepository
 
 
     // CREATE USER METHOD
@@ -97,7 +156,6 @@ public class BarberController : ControllerBase
         _barberRepository.CreateUser(user);
         return NoContent();
     }
-
     // CREATE USER METHOD
 
 

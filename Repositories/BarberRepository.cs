@@ -20,17 +20,29 @@ public class BarberRepository : IBarberRepository
     }
 
     // DeleteBarberById METHOD
+    // public void DeleteBarberById(int barberId)
+    // {
+    //     var barber = _context.Barber.Find(barberId);
+    //     if (barberId == barber.BarberId)
+    //     {
+    //         _context.Barber.Remove(barber);
+    //         _context.SaveChanges();
+    //     }
+    // }
+    // DeleteBarberById METHOD
+
+
+// TEST DeleteBarberById METHOD
     public void DeleteBarberById(int barberId)
     {
         var barber = _context.Barber.Find(barberId);
-        if (barberId == barber.BarberId)
+        if (barber != null)
         {
             _context.Barber.Remove(barber);
             _context.SaveChanges();
         }
     }
-
-    // DeleteBarberById METHOD
+// TEST DeleteBarberById METHOD
 
 
     // SearchBarbers METHOD
