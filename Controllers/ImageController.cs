@@ -35,8 +35,29 @@ public class ImageController : ControllerBase
     [Route("{barberImageLinkId:int}")]
     public ActionResult DeleteImage(int barberImageLinkId)
     {
-        _barberImgRepository.DeleteBarberImageLinkId(barberImageLinkId);
-        return NoContent();
+        if (HttpContext.User == null)
+        {
+            return Unauthorized();
+        }
+
+        var userIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"); //QUESTION THIS
+        var userId = Int32.Parse(userIdClaim.Value); 
+        var imageToDelete = _barberImgRepository.GetImageByImageLinkId(barberImageLinkId);
+
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+
+        if (userId == imageToDelete.BarberId)
+        {
+            _barberImgRepository.DeleteBarberImageLinkId(barberImageLinkId);
+            return NoContent();
+        }
+        else
+        {
+            return Unauthorized();
+        }
     }
 
     // DELETE IMAGE METHOD
@@ -45,20 +66,37 @@ public class ImageController : ControllerBase
     // CREATE IMAGE METHOD
     [HttpPost]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public ActionResult<BarberImageLink> CreateImage(BarberImageLink image)
+    public ActionResult<BarberImageLink> CreateImage(BarberImageLink imageLink)
     {
-        if (!ModelState.IsValid || image == null)
+        if (HttpContext.User == null)
+        {
+            return Unauthorized();
+        }
+
+        var userIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"); //QUESTION THIS
+        var userId = Int32.Parse(userIdClaim.Value); 
+        
+
+        if (userId == imageLink.BarberId)
+        {
+            return Ok(_barberImgRepository.CreateImg(imageLink));
+        }
+        else
+        {
+            return Unauthorized();
+        }
+
+        if (!ModelState.IsValid || imageLink == null)
         {
             return BadRequest();
         }
-        var newImage = _barberImgRepository.CreateImg(image);
-        return Created(nameof(GetImageByBarberId), newImage);
+
     }
 
     // CREATE IMAGE METHOD
 
     
-    // GET IMAGE BY ID METHOD
+    // GET IMAGE BY BARBERID METHOD
     [HttpGet]
     [Route("{barberId:int}")]
     public ActionResult GetImageByBarberId(int barberId)

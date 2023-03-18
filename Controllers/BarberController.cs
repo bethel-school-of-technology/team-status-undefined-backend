@@ -54,25 +54,8 @@ public class BarberController : ControllerBase
 
 
     // UPDATE BARBER METHOD
-    // [HttpPut]
-    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    // [Route("{BarberId:int}")]
-    // public ActionResult<Barber> UpdateBarber(Barber barber)
-    // {
-    //     if (!ModelState.IsValid || barber == null)
-    //     {
-    //         return BadRequest();
-    //     }
-    //     return Ok(_barberRepository.UpdateBarber(barber));
-    // }
-    // UPDATE BARBER METHOD
-
-
-    // TEST UPDATE METHOD
     [HttpPut]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    // [Route("{BarberId:int}")] WHICH ROUTE?
-    // [Route("edit/{BarberId:int}")]
     public ActionResult<Barber> UpdateBarber(Barber updatedBarber)
     {
         if (HttpContext.User == null)
@@ -97,21 +80,10 @@ public class BarberController : ControllerBase
             return Unauthorized();
         }
     }
-    // TEST UPDATE METHOD
+    // UPDATE BARBER METHOD
 
 
-    // DELETE BARBER METHOD
-    // [HttpDelete]
-    // [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    // [Route("{barberId:int}")]
-    // public ActionResult DeleteBarber(int barberId)
-    // {
-    //     _barberRepository.DeleteBarberById(barberId);
-    //     return NoContent();
-    // }
-    // DELETE BARBER METHOD
-
-    // TEST DELETE METHOD
+    // TEST DELETE BARBER METHOD
     [HttpDelete]
     [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     [Route("{barberId:int}")]
@@ -123,7 +95,7 @@ public class BarberController : ControllerBase
         }
 
         var userIdClaim = HttpContext.User.Claims.FirstOrDefault(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"); //QUESTION THIS
-        var userId = Int32.Parse(userIdClaim.Value); //NOT RETURNING THE RIGHT DATA TYPE
+        var userId = Int32.Parse(userIdClaim.Value); 
         var barberToDelete = _barberRepository.GetBarberById(barberId);
 
         if (userId == null)
@@ -141,7 +113,7 @@ public class BarberController : ControllerBase
             return Unauthorized();
         }
     }
-    // TEST DELETE METHOD  _experiencesRepository
+    // DELETE BARBER METHOD  
 
 
     // CREATE USER METHOD

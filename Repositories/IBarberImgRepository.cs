@@ -11,4 +11,6 @@ public interface IBarberImgRepository
     void DeleteBarberImageLinkId(int barberImageLinkId);
 
     IEnumerable<BarberImageLink> GetImageByBarberId(int barberId);
+
+    BarberImageLink? GetImageByImageLinkId(int barberImageLinkId);
 }

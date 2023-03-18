@@ -14,7 +14,7 @@ public class BarberImgRepository : IBarberImgRepository
         _config = config;
     }
 
-    // CreateImg METHOD
+    // Create Imgage METHOD
     public BarberImageLink? CreateImg(BarberImageLink imageLink)
     {
         _context.Add(imageLink);
@@ -22,10 +22,10 @@ public class BarberImgRepository : IBarberImgRepository
         return imageLink;
     }
 
-    // CreateImg METHOD
+    // Create Imgage METHOD
 
 
-    // DeleteBarberImageLinkId METHOD
+    // Delete Image by ImageLinkId METHOD
     public void DeleteBarberImageLinkId(int barberImageLinkId)
     {
         var BarberImageLink = _context.BarberImageLinks.Find(barberImageLinkId);
@@ -36,24 +36,35 @@ public class BarberImgRepository : IBarberImgRepository
         }
     }
 
-    // DeleteBarberImageLinkId METHOD
+    // Delete Image by ImageLinkId METHOD
 
 
-    // GetAllBarberImgs METHOD
+    // Get All Barber Images METHOD
     public IEnumerable<BarberImageLink> GetAllBarberImgs()
     {
-        return _context.BarberImageLinks.ToList();
+        return _context.BarberImageLinks.ToList(); 
     }
 
-    // GetAllBarberImgs METHOD
+    // Get All Barber Images METHOD
 
     
-    // GetImageByBarberId METHOD
+    // Get Image By BarberId METHOD
     public IEnumerable<BarberImageLink> GetImageByBarberId(int barberId)
     {
         return _context.BarberImageLinks.Where(
             c => c.BarberId == barberId
         );
     }
-    // GetImageByBarberId METHOD
+    // Get Image By BarberId METHOD
+
+    //Get Image By ImageLinkId
+
+    public BarberImageLink? GetImageByImageLinkId(int barberImageLinkId)
+    {
+        return _context.BarberImageLinks.SingleOrDefault(
+            c => c.BarberImageLinkId == barberImageLinkId
+        );
+    }
+
+    //Get Image By ImageLinkId
 }
