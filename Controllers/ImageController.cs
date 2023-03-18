@@ -58,6 +58,7 @@ public class ImageController : ControllerBase
         {
             return Unauthorized();
         }
+
     }
 
     // DELETE IMAGE METHOD
