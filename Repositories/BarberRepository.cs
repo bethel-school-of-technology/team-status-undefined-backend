@@ -40,7 +40,7 @@ public class BarberRepository : IBarberRepository
 
         if (!String.IsNullOrEmpty(search))
         {
-            barber = barber.Where(c => c.City.Contains(search) || c.FirstName.Contains(search));
+            barber = barber.Where(c => c.City.Contains(search));
         }
 
         return (barber.ToList());
